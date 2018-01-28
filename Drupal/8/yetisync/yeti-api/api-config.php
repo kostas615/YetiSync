@@ -21,10 +21,10 @@
 	// The $main_url is the way your webservice is being accessed remotely,
 	// example: "http://myyeti.com/api/webservice"
 
-	$username = 'key1';
-	$password = 'key1';
-	$api_key = 'NPd018EzqyPTqwtKCb1z2knK7uEhmdEB';
-	$main_url = 'http://localhost/yetiforce/api/webservice';
+	$username = 'username';
+	$password = 'password';
+	$api_key = '------api-key------';
+	$main_url = 'https://---------/api/webservice';
 
 
 
