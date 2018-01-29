@@ -1,0 +1,46 @@
+<?php
+/**
+* @file
+*
+* YetiSync Module for drupal (personalized).
+*
+* Author: Konstantinos Chatzis <kostaschatzis01@gmail.com>
+*
+* 27/01/2018
+*/
+
+  /**
+  * Implements hook_views_default_views().
+  */
+  //function yetisync_views_default_views() {
+
+
+  //}
+
+  /**
+  * Implements hook_help().
+  * Displays help and module information.
+  *
+  * @param path
+  *   Which path of the site we're using to display help
+  * @param arg
+  *   Array that holds the current path as returned from arg() function
+  */
+  function yetisync_help ($path, $arg) {
+    if( strpos( $path, 'admin/help/yetisync' ) !== false ) {
+      return ("<h1>For help, contact your system administrator.</h1><br><br><h3>Developed by Konstantinos Chatzis<br>Email: kostaschatzis01@gmail.com</h3><br><br>");
+    }
+  }
+
+  /**
+   * Implements hook_block_info().
+   */
+  function yetisync_block_info() {
+    $blocks['yetisync'] = array(
+      // The name that will appear in the block list.
+      'info' => t('YetiSync'),
+      // Default setting.
+      'cache' => DRUPAL_CACHE_PER_ROLE,
+    );
+    return $blocks;
+  }
