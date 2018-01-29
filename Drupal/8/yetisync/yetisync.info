@@ -1,8 +1,0 @@
-name= YetiSync
-description= YetiSync synchronizes YetiForce CRM with your drupal database. Developed by Konstantinos Chatzis (kostaschatzis01@gmail.com).
-core= 7.x
-type= module
-package= YetiForce CRM
-version= 1.1.1
-
-configure = admin/config/content/yetisync

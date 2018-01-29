@@ -33,7 +33,6 @@
 	$login_url = $main_url . '/Users/Login';
 	$get_accounts_url = $main_url . '/Accounts/RecordsList';
 	$get_contacts_url = $main_url . '/Contacts/RecordsList';
-	$get_leads_url = $main_url . '/Leads/RecordsList';
 
 
 ?>

@@ -6,7 +6,14 @@
 *
 * Author: Konstantinos Chatzis <kostaschatzis01@gmail.com>
 *
+* 27/01/2018
 */
+
+  /**
+  * Implements hook_views_default_views().
+  */
+  //function yetisync_views_default_views() {
+
 
   //}
 
@@ -20,8 +27,8 @@
   *   Array that holds the current path as returned from arg() function
   */
   function yetisync_help ($path, $arg) {
-    if( strpos( $path, 'admin/help#yetisync' ) !== false ) {
-      return t("<h1>For help, contact your system administrator.</h1><br><br><h3>Developed by Konstantinos Chatzis<br>Email: kostaschatzis01@gmail.com</h3><br><br>");
+    if( strpos( $path, 'admin/help/yetisync' ) !== false ) {
+      return ("<h1>For help, contact your system administrator.</h1><br><br><h3>Developed by Konstantinos Chatzis<br>Email: kostaschatzis01@gmail.com</h3><br><br>");
     }
   }
 
@@ -36,139 +43,4 @@
       'cache' => DRUPAL_CACHE_PER_ROLE,
     );
     return $blocks;
-  }
-
-
-  function yetisync_form($form, &$form_state) {
-
-   $form['price'] = array(
-      '#type' => 'textfield', //you can find a list of available types in the form api
-      '#title' => 'What is Your Price?',
-      '#size' => 10,
-      '#maxlength' => 10,
-      '#required' => TRUE, //make this field required
-    );
-
-    $form['submit_button'] = array(
-      '#type' => 'submit',
-      '#value' => t('Click Here!'),
-    );
-
-    return $form;
-  }
-
-
-  function yetisync_form_submit($form, &$form_state) {
-  }
-
-
-  function yetisync_menu() {
-    $items = array();
-
-    $items['admin/config/content/yetisync-leads'] = array(
-      'title' => 'YetiSync - Leads List',
-      'description' => t('View the list of synced Leads.'),
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('yetisync_leads_form'),
-      'access arguments' => array('access administration pages'),
-      'type' => MENU_NORMAL_ITEM,
-    );
-
-    $items['admin/config/content/yetisync-update'] = array(
-      'title' => 'YetiSync - Sync Lists',
-      'description' => t('Sync lists from YetiForce.'),
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('yetisync_sync_form'),
-      'access arguments' => array('access administration pages'),
-      'type' => MENU_NORMAL_ITEM,
-    );
-
-    return $items;
-  }
-
-
-  function yetisync_leads_form($form, &$form_state) {
-
-    $result = db_select('yetisync_leads', 'n')
-            ->fields(
-              'n',
-              array(
-                'id',
-                'name',
-                'phone',
-                'email',
-                'address'
-              ))
-            ->execute()->fetchAllAssoc('id');
-
-      $rows = array();
-      foreach ($result as $row => $content) {
-        $rows[] = array(
-          'data' => array(
-            $content->id,
-            $content->name,
-            $content->phone,
-            $content->email,
-            $content->address
-          ));
-      }
-
-    $header = array('ID', t('Name'), t('Phone Number'), t('Email'), t('Address'));
-    $output = array(
-      '#theme' => 'table',
-      '#header' => $header,
-      '#rows' => $rows
-    );
-
-    return $output;
-  }
-
-
-  function yetisync_sync_form ($form, &$form_state) {
-    update_leads();
-    //return redirect('admin/config/content');
-  }
-
-  function update_leads() {
-    include_once (__DIR__ . './yeti-api/api-get-json.php');
-    $json = new ApiGetJson;
-
-    // Try fetching info, otherwise dont delete the old data.
-    try {
-
-      $result = $json->getLeads();
-      $leads = $result->result->records;
-
-      if (isset($leads)) {
-
-        $query = db_delete('yetisync_leads')
-          ->execute();
-
-        $id = 0;
-        foreach ($leads as $lead) {
-          $id = $id+1;
-          $query = db_insert('yetisync_leads')
-            ->fields([
-              'id',
-              'name',
-              'phone',
-              'email',
-              'address'
-            ])
-            ->values(array(
-              $id,
-              $lead->accountname,
-              $lead->phone,
-              $lead->email1,
-              $lead->addresslevel8a . ", " . $lead->addresslevel7a . " " . $lead->addresslevel5a . ", " . $lead->addresslevel3a
-            ))
-            ->execute();
-        }
-      }
-
-    }
-    catch (\Exception $e){
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
-
   }

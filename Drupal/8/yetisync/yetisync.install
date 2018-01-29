@@ -9,28 +9,126 @@
 * 28/01/2018
 */
 
+  /**
+  * Implements hook_install().
+  * Installs module-required tables in the database.
+  */
+  //function yetisync_install () {
 
-/**
-* Implements hook_schema().
-* Contains information about the tables.
-*/
-function yetisync_schema () {
+  //}
 
-  $schema['yetisync_test2'] = array(
-    'description' => 'YetiSync Accounts',
-    'fields' => array(
+  /**
+  * Implements hook_schema().
+  * Contains information about the tables.
+  */
+  function yetisync_schema() {
 
-        'id' => array(
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'not null' => TRUE
-        ),
-    ),
+    $schema['yetisync_accounts'] = array(
+      'description' => 'The base table for YetiSync Accounts.',
+      'fields' => array(
 
-    'primary key' => array('id'),
+          'id' => array(
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE
+          ),
 
-  );
+          'name' => array(
+            'type' => 'varchar',
+            'length' => 48,
+            'not null' => TRUE,
+            'default' => ''
+          ),
 
-  return $schema;
+          'phone' => array(
+            'type' => 'varchar',
+            'length' => 18,
+            'not null' => TRUE,
+            'default' => ''
+          ),
 
-}
+          'address' => array(
+            'type' => 'varchar',
+            'length' => 78,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+          'email' => array(
+            'type' => 'varchar',
+            'length' => 48,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+      ),
+
+      'unique keys' => array(
+        'id' => array('id'),
+      ),
+
+      'primary key' => array('id'),
+
+    );
+
+
+    $schema['yetisync_contacts'] = array(
+      'description' => 'The base table for YetiSync Contacts.',
+      'fields' => array(
+
+          'id' => array(
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE
+          ),
+
+          'name' => array(
+            'type' => 'varchar',
+            'length' => 48,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+          'phone' => array(
+            'type' => 'varchar',
+            'length' => 18,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+          'address' => array(
+            'type' => 'varchar',
+            'length' => 78,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+          'email' => array(
+            'type' => 'varchar',
+            'length' => 48,
+            'not null' => TRUE,
+            'default' => ''
+          ),
+
+      ),
+
+      'unique keys' => array(
+        'id' => array('id'),
+      ),
+
+      'primary key' => array('id'),
+
+    );
+
+
+    return $schema;
+
+  }
+
+  /**
+  * Implements hook_update_N().
+  * Updates database schema.
+  */
+  //function yetisync_update_1 () {
+  //  ;
+  //}
